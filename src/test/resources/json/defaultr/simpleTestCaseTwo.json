@@ -1,0 +1,52 @@
+{
+  "input": {
+    "Rating": 3,
+    "SecondaryRatings": {
+      "quality": {
+        "Range": 7,
+        "Value": 3,
+        "Id": "quality"
+      },
+      "sharpness": {
+        "Value": 4,
+        "Id": "sharpness"
+      }
+    }
+  },
+  "specs": [
+    {
+      "operation": "remove",
+      "spec": {
+        "SecondaryRatings": {
+          "sharpness": ""
+        }
+      }
+    }
+  ,
+    {
+      "operation": "shift",
+      "spec": {
+        "Rating": "Rating.primary.value",
+        "SecondaryRatings": {
+          "quality": {
+            "Range": "Rating.secondary.range",
+            "Value": "Rating.secondary.value"
+          },
+          "sharpness": "shouldNotBePresent"
+        }
+      }
+    }
+  ]
+,
+  "expected": {
+    "Rating" : {
+      "primary" : {
+        "value" : 3
+      },
+      "secondary" : {
+        "range" : 7,
+        "value" : 3
+      }
+    }
+  }
+}
