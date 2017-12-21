@@ -1,42 +1,32 @@
 package com.github.lusoalex;
 
-import java.io.IOException;
-
 import com.github.lusoalex.chainr.ChainrBuilder;
-import org.junit.Assert;
-import org.junit.Test;
-
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
+import org.junit.Assert;
+import org.junit.Test;
+
+import java.io.IOException;
 
 /**
  * These tests only aim to validate our entry point to jolt.
  * JOLT functions are/should be tested into the core project : https://github.com/bazaarvoice/jolt
  */
-public class ChainrTest {
+public class ChainrTestJsonArray {
 
-    final static private String RESSOURCE_PATH = "src/test/resources/json/defaultr/";
-
-    @Test
-    public void shiftThenRemove() throws IOException {
-        testTransformWithFullSpecs("simpleTestCaseOne.json");
-    }
+    final static private String RESSOURCE_PATH = "src/test/resources/json/defaultr/json/array/";
 
     @Test
-    public void removeThenShift() throws IOException {
-        testTransformWithFullSpecs("simpleTestCaseTwo.json");
-    }
-
-    private void testTransformWithFullSpecs(String fileName) throws IOException {
-        JsonObject jsonTest = Vertx.vertx().fileSystem().readFileBlocking(RESSOURCE_PATH+fileName).toJsonObject();
+    public void testTransformWithFullSpecs() throws IOException {
+        JsonObject jsonTest = Vertx.vertx().fileSystem().readFileBlocking(RESSOURCE_PATH+"simpleTestCaseOne.json").toJsonObject();
 
         JsonObject input = jsonTest.getJsonObject("input");
         JsonArray specs = jsonTest.getJsonArray("specs");
-        JsonObject expected = jsonTest.getJsonObject("expected");
+        JsonArray expected = jsonTest.getJsonArray("expected");
 
         Chainr chainr = new ChainrBuilder(specs).build();
-        JsonObject result = chainr.transform(input);
+        JsonArray result = chainr.transformToJsonArray(input);
 
         Assert.assertTrue("Jolt mapping result not as expected.", expected.equals(result));
     }
@@ -47,10 +37,10 @@ public class ChainrTest {
 
         JsonObject input = jsonTest.getJsonObject("input");
         JsonArray specs = jsonTest.getJsonArray("specs");
-        JsonObject expected = jsonTest.getJsonObject("expected");
+        JsonArray expected = jsonTest.getJsonArray("expected");
 
         Chainr chainr = new ChainrBuilder(specs).build();
-        JsonObject result = chainr.transform(1,input);
+        JsonArray result = chainr.transformToJsonArray(1,input);
 
         Assert.assertTrue("Jolt mapping result not as expected.", expected.equals(result));
     }
@@ -61,10 +51,10 @@ public class ChainrTest {
 
         JsonObject input = jsonTest.getJsonObject("input");
         JsonArray specs = jsonTest.getJsonArray("specs");
-        JsonObject expected = jsonTest.getJsonObject("expected");
+        JsonArray expected = jsonTest.getJsonArray("expected");
 
         Chainr chainr = new ChainrBuilder(specs).build();
-        JsonObject result = chainr.transform(1,2,input);
+        JsonArray result = chainr.transformToJsonArray(0,2,input);
 
         Assert.assertTrue("Jolt mapping result not as expected.", expected.equals(result));
     }

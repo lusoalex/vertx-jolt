@@ -1,11 +1,13 @@
 package com.github.lusoalex;
 
+import java.util.List;
 import java.util.Map;
 
+import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 
 /**
- * Created by Alexandre on 30/11/2016.
+ * Created by lusoalex @github.com on 30/11/2016.
  */
 public class Chainr {
 
@@ -15,18 +17,46 @@ public class Chainr {
         this.proxyChainr = chainr;
     }
 
-    public JsonObject transform(JsonObject input) {
-        Map<String, Object> transformed = (Map<String, Object>) proxyChainr.transform(input.getMap());
+    public Object transform(JsonObject input) {
+        return proxyChainr.transform(input.getMap());
+    }
+
+    public Object transform(int to, JsonObject input) {
+        return proxyChainr.transform(to, input.getMap());
+    }
+
+    public Object transform(int from, int to, JsonObject input) {
+        return proxyChainr.transform(from, to, input.getMap());
+    }
+
+    public JsonObject transformToJsonObject(JsonObject input) {
+        Map<String, Object> transformed = (Map<String, Object>) transform(input);
         return new JsonObject(transformed);
     }
 
-    public JsonObject transform(int to, JsonObject input) {
-        Map<String, Object> transformed = (Map<String, Object>) proxyChainr.transform(to, input.getMap());
+    public JsonObject transformToJsonObject(int to, JsonObject input) {
+        Map<String, Object> transformed = (Map<String, Object>) transform(to, input);
         return new JsonObject(transformed);
     }
 
-    public JsonObject transform(int from, int to, JsonObject input) {
-        Map<String, Object> transformed = (Map<String, Object>) proxyChainr.transform(from, to, input.getMap());
+    public JsonObject transformToJsonObject(int from, int to, JsonObject input) {
+        Map<String, Object> transformed = (Map<String, Object>) transform(from, to, input);
         return new JsonObject(transformed);
     }
+
+    public JsonArray transformToJsonArray(JsonObject input) {
+        List<Object> transformed = (List<Object>) transform(input);
+        return new JsonArray(transformed);
+    }
+
+    public JsonArray transformToJsonArray(int to, JsonObject input) {
+        List<Object> transformed = (List<Object> ) transform(to, input);
+        return new JsonArray(transformed);
+    }
+
+    public JsonArray transformToJsonArray(int from, int to, JsonObject input) {
+        List<Object> transformed = (List<Object> ) transform(from, to, input);
+        return new JsonArray(transformed);
+    }
+
 }
