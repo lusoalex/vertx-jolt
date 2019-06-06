@@ -57,7 +57,7 @@
         <dependency>
             <groupId>com.bazaarvoice.jolt</groupId>
             <artifactId>json-utils</artifactId>
-            <version>0.0.24</version>
+            <version>0.1.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
